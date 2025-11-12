@@ -6,7 +6,7 @@ router.get('/search',function(req, res, next){
     res.render("search.ejs")
 });
 
-router.get('/search-result', function (req, res, next) {
+router.get('/search_result', function (req, res, next) {
     //searching in the database
     res.send("You searched for: " + req.query.keyword)
 });
@@ -18,7 +18,9 @@ router.get('/list', function(req, res, next) {
         if (err) {
             next(err)
         }
-        res.send(result)
+        else {
+            res.render("list.ejs", {availableBooks: result})
+        }
     });
 });
 
