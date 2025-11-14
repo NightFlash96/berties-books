@@ -24,6 +24,19 @@ router.get('/list', function(req, res, next) {
     });
 });
 
+router.get('/bargainbooks', function(req, res, next) {
+    let sqlquery = "SELECT * FROM books WHERE price < 20"; // query database to get all the books
+    // execute sql query
+    db.query(sqlquery, (err, result) => {
+        if (err) {
+            next(err)
+        }
+        else {
+            res.render("list.ejs", {availableBooks: result})
+        }
+    });
+});
+
 
 // Export the router object so index.js can access it
 module.exports = router

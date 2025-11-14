@@ -1,0 +1,34 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <meta charset="utf-8">
+    <title>Bargain Books!</title>
+    <link rel="stylesheet" href="/main.css">
+</head>
+<body>
+    <h1>Bargain Books!</h1>
+
+    <% if (Array.isArray(availableBooks) && availableBooks.length) { %>
+        <table class="book-list">
+            <thead>
+                <tr>
+                    <th>Title</th>
+                    <th>Price</th>
+                </tr>
+            </thead>
+            <tbody>
+            <% availableBooks.forEach(function(book) { %>
+                <tr>
+                    <td><%= book.name %></td>
+                    <td>$<%= (typeof book.price === 'number' ? book.price : Number(book.price)).toFixed(2) %></td>
+                </tr>
+            <% }); %>
+            </tbody>
+        </table>
+    <% } else { %>
+        <p>No books found.</p>
+    <% } %>
+
+    <p><a href="/">Back to home</a></p>
+</body>
+</html>
