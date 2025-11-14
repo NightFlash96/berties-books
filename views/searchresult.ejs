@@ -1,0 +1,39 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <meta charset="utf-8">
+    <title>Search Results</title>
+    <link rel="stylesheet" href="/main.css">
+</head>
+<body>
+    <h1>Search Results</h1>
+
+    <% if (searchTerm) { %>
+        <p>Results for: "<%= searchTerm %>"</p>
+    <% } %>
+
+    <% if (Array.isArray(searchResults) && searchResults.length) { %>
+        <table class="book-list">
+            <thead>
+                <tr>
+                    <th>Title</th>
+                    <th>Price</th>
+                </tr>
+            </thead>
+            <tbody>
+            <% searchResults.forEach(function(book) { %>
+                <tr>
+                    <td><%= book.name %></td>
+                    <td>$<%= (typeof book.price === 'number' ? book.price : Number(book.price)).toFixed(2) %></td>
+                </tr>
+            <% }); %>
+            </tbody>
+        </table>
+    <% } else { %>
+        <p>No books found.</p>
+    <% } %>
+
+    <p><a href="/books/search">Back to search</a></p>
+    <p><a href="/">Back to home</a></p>
+</body>
+</html>

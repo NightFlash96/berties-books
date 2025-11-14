@@ -7,8 +7,19 @@ router.get('/search',function(req, res, next){
 });
 
 router.get('/search_result', function (req, res, next) {
-    //searching in the database
-    res.send("You searched for: " + req.query.keyword)
+    // searching in the database for the keyword from the search form
+    let keyword = (req.query.search_text || '').trim();
+    let like = '%' + keyword + '%';
+    let sqlquery = "SELECT * FROM books WHERE name LIKE ?"; // adjust column name if different (e.g. title)
+    // execute sql query
+    db.query(sqlquery, [like], (err, result) => {
+        if (err) {
+            next(err)
+        }
+        else {
+            res.render("searchresult.ejs", { searchResults: result, searchTerm: keyword })
+        }
+    });
 });
 
 router.get('/list', function(req, res, next) {
@@ -32,7 +43,7 @@ router.get('/bargainbooks', function(req, res, next) {
             next(err)
         }
         else {
-            res.render("list.ejs", {availableBooks: result})
+            res.render("bargainbooks.ejs", {availableBooks: result})
         }
     });
 });
